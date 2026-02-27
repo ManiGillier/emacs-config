@@ -1,6 +1,5 @@
 
-(setq org-agenda-files (list "~/Personnal/emacs/test/test.org"
-			     "~/org/"))
+(setq org-agenda-files (list "~/org/"))
 (setq org-todo-keywords
       '((sequence "TODO(t)" "VERIFY(v!/@!)" "|" "DONE(d!)")))
 (setq org-clock-persist 'history)
@@ -53,3 +52,23 @@
 (keymap-global-set "<f8>" 'magit-status)
 (keymap-global-set "C-x C-b" 'ibuffer)
 (keymap-global-set "M-o" 'other-window)
+
+(require 'package)
+(add-to-list 'package-archives
+	     '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-files
+   '("/home/mani/org/notes.org" "/home/mani/org/organization.org"))
+ '(package-selected-packages '(forge magit magit-gitlab magit-lfs)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
