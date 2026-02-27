@@ -46,7 +46,13 @@
   (interactive)
   (org-agenda nil "a"))
 
-(keymap-global-set "C-k" 'revert-buffer-quick)
+(defun kill-buffer-quick ()
+  (interactive)
+  (kill-buffer nil))
+
+(keymap-global-set "C-k" 'kill-buffer-quick)
+;; Similar to "C-_" (undo)
+(keymap-global-set "C-x _" 'revert-buffer-quick)
 (keymap-global-set "<f6>" 'org-agenda)
 (keymap-global-set "<f5>" 'org-agenda-a)
 (keymap-global-set "<f8>" 'magit-status)
