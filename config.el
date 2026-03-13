@@ -71,7 +71,7 @@
  ;; If there is more than one, they won't work right.
  '(org-agenda-files
    '("/home/mani/org/notes.org" "/home/mani/org/organization.org"))
- '(package-selected-packages '(forge magit magit-gitlab magit-lfs)))
+ '(package-selected-packages '(company forge magit magit-gitlab magit-lfs)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
