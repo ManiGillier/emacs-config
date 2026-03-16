@@ -58,11 +58,20 @@
 (keymap-global-set "<f8>" 'magit-status)
 (keymap-global-set "C-x C-b" 'ibuffer)
 (keymap-global-set "M-o" 'other-window)
+(keymap-global-set "C-x t" 'treemacs)
+(keymap-global-set "M-p" 'switch-to-buffer)
 
 (require 'package)
 (add-to-list 'package-archives
 	     '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 
+;; EGLOT config
+
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+(setq eglot-autoshutdown 't)
+(add-hook 'after-init-hook 'global-company-mode)
+(ivy-mode 1)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -71,7 +80,7 @@
  ;; If there is more than one, they won't work right.
  '(org-agenda-files
    '("/home/mani/org/notes.org" "/home/mani/org/organization.org"))
- '(package-selected-packages '(company forge magit magit-gitlab magit-lfs)))
+ '(package-selected-packages '(company forge ivy magit magit-gitlab magit-lfs treemacs)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
