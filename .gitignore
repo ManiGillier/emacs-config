@@ -1,1 +1,7 @@
 *~
+/.cache/
+/.org-id-locations
+/bookmarks
+/eln-cache/
+/elpa/
+/org-clock-save.el
