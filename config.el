@@ -3,17 +3,7 @@
 (setq split-height-threshold 50)
 (setq split-window-preferred-function 'split-window-sensibly)
 (setq pop-up-frames nil)
-(setq org-agenda-files (list "~/org/"))
-(setq org-todo-keywords
-      '((sequence "TODO(t)" "VERIFY(v!/@!)" "|" "DONE(d!)")))
-(setq org-clock-persist 'history)
-(org-clock-persistence-insinuate)
-(setq org-clock-idle-time 5)
-(setq org-clock-continuously nil)
-(setq org-global-properties '(("Effort_ALL" . "0 0:15 0:30 1:00 2:00 3:00 4:00 5:00 6:00 7:00")))
-(setq org-columns-default-format "%25ITEM %1PRIORITY %EFFORT{:} %CLOCKSUM")
-(setq org-log-refile 't)
-(setq org-directory "~/org")
+
 (setq org-capture-templates
       '(("t" "Task")
         ("tp" "Task Plan" entry (file+headline "~/org/organization.org" "Tasks")
@@ -51,13 +41,6 @@
 (setq desktop-path '("~/"))
 (desktop-save-mode 1)
 
-(defun org-agenda-a ()
-  (interactive)
-  (org-agenda nil "a"))
-(defun org-agenda-notes ()
-  (interactive)
-  (org-agenda nil "n"))
-
 (defun kill-buffer-quick ()
   (interactive)
   (kill-buffer nil))
@@ -71,9 +54,24 @@
 (keymap-global-set "<f8>" 'magit-status)
 (keymap-global-set "C-x C-b" 'ibuffer)
 (keymap-global-set "M-o" 'other-window)
+(keymap-global-set "C-o" 'other-window)
 (keymap-global-set "M-<backspace>" 'delete-window)
 (keymap-global-set "C-x t" 'treemacs)
 (keymap-global-set "M-p" 'switch-to-buffer)
+
+(keymap-global-set "C-s-<XF86TouchpadOff>" 'other-window)
+(keymap-global-set "s-<XF86TouchpadOff>" 'delete-window)
+(keymap-global-set "C-v" 'switch-to-next-buffer)
+
+(require 'eglot)
+(global-set-key [C-mouse-1] 'xref-find-definitions-at-mouse)
+(global-set-key [C-down-mouse-1] nil)
+(global-set-key [C-mouse-3] 'xref-pop-marker-stack)
+(global-set-key [C-down-mouse-3] nil)
+; (keymap-global-unset "C-<mouse-1>")
+; (keymap-global-unset "C-<down-mouse-1>")
+; (keymap-global-unset "C-<mouse-3>")
+; (keymap-global-unset "C-<down-mouse-3>")
 
 (require 'package)
 (add-to-list 'package-archives
@@ -89,25 +87,33 @@
 
 ;; Custom agenda
 
-(setq org-agenda-custom-commands
-      '(("l" tags "+learning")
-	("t" todo "TO-REFINE")
-	("n" tags "+note")))
-
 (require 'org-alert)
 (setq alert-default-style 'libnotify)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-agenda-files
-   '("/home/mani/org/notes.org" "/home/mani/org/organization.org"))
- '(package-selected-packages '(company forge ivy magit magit-gitlab magit-lfs treemacs org-alert)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(require 'helm-org-rifle)
+
+;; Server
+
+(server-start)
+
+;; Mails sending
+
+(setq user-full-name "Mani Gillier")
+(setq user-mail-address "mani@gillier.dev")
+(setq smtpmail-smtp-server "smtp.mail.ovh.net"
+      smtpmail-smtp-service 465
+      smtpmail-stream-type 'ssl)
+(setq send-mail-function 'smtpmail-send-it)
+
+;; AI
+
+(use-package copilot
+  :ensure t
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . copilot-accept-completion)
+              ("TAB" . copilot-accept-completion)
+              ("C-<tab>" . copilot-accept-completion-by-word)
+              ("C-TAB" . copilot-accept-completion-by-word)
+              ("C-n" . copilot-next-completion)
+              ("C-p" . copilot-previous-completion)))
